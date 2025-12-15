@@ -1,0 +1,73 @@
+.consulta-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.search-card {
+  background: var(--background-light);
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+
+  .material-icons {
+    color: var(--primary-color);
+  }
+}
+
+.search-form {
+  .form-row {
+    display: flex;
+    gap: 16px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .form-group {
+    min-width: 200px;
+    margin-bottom: 0;
+
+    &.flex-grow {
+      flex: 1;
+      min-width: 300px;
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .search-form {
+    .form-row {
+      flex-direction: column;
+    }
+
+    .form-group {
+      width: 100%;
+      min-width: unset;
+
+      &.flex-grow {
+        min-width: unset;
+      }
+    }
+
+    .form-actions {
+      width: 100%;
+      flex-direction: column;
+
+      .btn {
+        width: 100%;
+      }
+    }
+  }
+}

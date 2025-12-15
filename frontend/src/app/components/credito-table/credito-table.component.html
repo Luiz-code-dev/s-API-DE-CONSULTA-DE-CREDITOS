@@ -1,0 +1,93 @@
+<div class="results-header">
+  <h3>
+    <span class="material-icons">list_alt</span>
+    Resultados da Consulta
+  </h3>
+  <span class="results-count">{{ creditos.length }} registro(s) encontrado(s)</span>
+</div>
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>Nº Crédito</th>
+        <th>Nº NFS-e</th>
+        <th>Data Constituição</th>
+        <th>Tipo Crédito</th>
+        <th>Simples Nacional</th>
+        <th>Alíquota</th>
+        <th>Valor Faturado</th>
+        <th>Valor Dedução</th>
+        <th>Base Cálculo</th>
+        <th>Valor ISSQN</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let credito of creditos">
+        <td class="credito-number">{{ credito.numeroCredito }}</td>
+        <td>{{ credito.numeroNfse }}</td>
+        <td>{{ formatDate(credito.dataConstituicao) }}</td>
+        <td>
+          <span class="badge" [ngClass]="credito.tipoCredito === 'ISSQN' ? 'badge-success' : 'badge-warning'">
+            {{ credito.tipoCredito }}
+          </span>
+        </td>
+        <td>
+          <span class="badge" [ngClass]="credito.simplesNacional === 'Sim' ? 'badge-success' : 'badge-warning'">
+            {{ credito.simplesNacional }}
+          </span>
+        </td>
+        <td class="text-right">{{ formatPercentage(credito.aliquota) }}</td>
+        <td class="text-right">{{ formatCurrency(credito.valorFaturado) }}</td>
+        <td class="text-right">{{ formatCurrency(credito.valorDeducao) }}</td>
+        <td class="text-right">{{ formatCurrency(credito.baseCalculo) }}</td>
+        <td class="text-right highlight">{{ formatCurrency(credito.valorIssqn) }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="table-mobile">
+  <div class="credito-card" *ngFor="let credito of creditos">
+    <div class="credito-card-header">
+      <span class="credito-number">Crédito: {{ credito.numeroCredito }}</span>
+      <span class="badge" [ngClass]="credito.tipoCredito === 'ISSQN' ? 'badge-success' : 'badge-warning'">
+        {{ credito.tipoCredito }}
+      </span>
+    </div>
+    <div class="credito-card-body">
+      <div class="credito-info">
+        <span class="label">NFS-e:</span>
+        <span class="value">{{ credito.numeroNfse }}</span>
+      </div>
+      <div class="credito-info">
+        <span class="label">Data:</span>
+        <span class="value">{{ formatDate(credito.dataConstituicao) }}</span>
+      </div>
+      <div class="credito-info">
+        <span class="label">Simples Nacional:</span>
+        <span class="value">{{ credito.simplesNacional }}</span>
+      </div>
+      <div class="credito-info">
+        <span class="label">Alíquota:</span>
+        <span class="value">{{ formatPercentage(credito.aliquota) }}</span>
+      </div>
+      <div class="credito-info">
+        <span class="label">Valor Faturado:</span>
+        <span class="value">{{ formatCurrency(credito.valorFaturado) }}</span>
+      </div>
+      <div class="credito-info">
+        <span class="label">Dedução:</span>
+        <span class="value">{{ formatCurrency(credito.valorDeducao) }}</span>
+      </div>
+      <div class="credito-info">
+        <span class="label">Base Cálculo:</span>
+        <span class="value">{{ formatCurrency(credito.baseCalculo) }}</span>
+      </div>
+      <div class="credito-info highlight">
+        <span class="label">Valor ISSQN:</span>
+        <span class="value">{{ formatCurrency(credito.valorIssqn) }}</span>
+      </div>
+    </div>
+  </div>
+</div>
