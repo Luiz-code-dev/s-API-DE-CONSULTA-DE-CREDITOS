@@ -217,7 +217,42 @@ GET /api/creditos/credito/{numeroCredito}
 
 ## 🧪 Testes
 
-### Backend
+### Testes Visuais da API
+
+#### Swagger UI (Recomendado)
+
+Acesse a documentação interativa no navegador:
+```
+http://localhost:8080/swagger-ui.html
+```
+
+No Swagger você pode:
+- Visualizar todos os endpoints disponíveis
+- Testar as requisições diretamente no browser
+- Ver os schemas de request/response
+
+#### Postman / cURL
+
+**Buscar créditos por NFS-e:**
+```bash
+curl http://localhost:8080/api/creditos/7891011
+```
+
+**Buscar crédito por número:**
+```bash
+curl http://localhost:8080/api/creditos/credito/123456
+```
+
+#### PowerShell
+```powershell
+# Buscar por NFS-e (retorna 2 créditos)
+Invoke-RestMethod -Uri "http://localhost:8080/api/creditos/7891011"
+
+# Buscar crédito específico
+Invoke-RestMethod -Uri "http://localhost:8080/api/creditos/credito/123456"
+```
+
+### Testes Unitários (Backend)
 
 ```bash
 cd backend
@@ -254,7 +289,7 @@ docker build -t credito-frontend:latest ./frontend
 
 | Variável | Descrição | Padrão |
 |----------|-----------|--------|
-| `SPRING_DATASOURCE_URL` | URL do banco de dados | `jdbc:postgresql://localhost:5432/credito_db` |
+| `SPRING_DATASOURCE_URL` | URL do banco de dados | `jdbc:postgresql://localhost:5433/credito_db` |
 | `SPRING_DATASOURCE_USERNAME` | Usuário do banco | `postgres` |
 | `SPRING_DATASOURCE_PASSWORD` | Senha do banco | `postgres` |
 | `SPRING_KAFKA_BOOTSTRAP_SERVERS` | Servidores Kafka | `localhost:9092` |
@@ -284,6 +319,31 @@ Toda vez que uma consulta é realizada, um evento é publicado no tópico `consu
   "quantidadeResultados": 2,
   "sucesso": true
 }
+```
+
+### Monitorar Eventos no Kafka
+
+**Ver mensagens em tempo real:**
+```bash
+docker exec -it credito-kafka-dev kafka-console-consumer \
+  --bootstrap-server localhost:9092 \
+  --topic consulta-credito-topic \
+  --from-beginning
+```
+
+**Listar tópicos disponíveis:**
+```bash
+docker exec credito-kafka-dev kafka-topics \
+  --bootstrap-server localhost:9092 \
+  --list
+```
+
+**Ver detalhes do tópico:**
+```bash
+docker exec credito-kafka-dev kafka-topics \
+  --bootstrap-server localhost:9092 \
+  --describe \
+  --topic consulta-credito-topic
 ```
 
 ## 📝 Documentação da API
